@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-employee-lifecycle"
+		},
+		"LS_AzureDatabricks_EmployeeLifecycle_accessToken": {
+			"value": ""
+		},
+		"LS_AzureDatabricks_EmployeeLifecycle_properties_typeProperties_existingClusterId": {
+			"value": "0814-185327-8x8pi3rv"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

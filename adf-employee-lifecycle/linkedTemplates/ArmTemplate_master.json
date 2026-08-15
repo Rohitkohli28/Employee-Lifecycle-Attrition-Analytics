@@ -1,0 +1,56 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-employee-lifecycle"
+		},
+		"LS_AzureDatabricks_EmployeeLifecycle_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'LS_AzureDatabricks_EmployeeLifecycle'"
+		},
+		"LS_AzureDatabricks_EmployeeLifecycle_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0814-185327-8x8pi3rv"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf-employee-lifecycle_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_AzureDatabricks_EmployeeLifecycle_accessToken": {
+						"value": "[parameters('LS_AzureDatabricks_EmployeeLifecycle_accessToken')]"
+					},
+					"LS_AzureDatabricks_EmployeeLifecycle_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('LS_AzureDatabricks_EmployeeLifecycle_properties_typeProperties_existingClusterId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
