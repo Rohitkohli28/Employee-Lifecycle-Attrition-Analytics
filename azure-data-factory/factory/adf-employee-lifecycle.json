@@ -1,0 +1,15 @@
+{
+	"name": "adf-employee-lifecycle",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "c68bc299-78cf-4e95-bf9f-7c0a7f3c202a",
+		"tenantId": "a6dbddde-5798-4eba-a5a8-78807e82d9eb"
+	}
+}

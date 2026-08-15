@@ -1,0 +1,111 @@
+{
+	"name": "PL_Employee_Lifecycle",
+	"properties": {
+		"activities": [
+			{
+				"name": "Bronze_Ingestion",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/1000021024@dit.edu.in/01_bronze_ingestion"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureDatabricks_EmployeeLifecycle",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Silver_Transformation",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Bronze_Ingestion",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/1000021024@dit.edu.in/02_silver_transformation"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureDatabricks_EmployeeLifecycle",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "SCD2_Incremental_Load",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Silver_Transformation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/1000021024@dit.edu.in/04_SCD2_Incremental_Load"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureDatabricks_EmployeeLifecycle",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Gold_Business_Analytics",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "SCD2_Incremental_Load",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/1000021024@dit.edu.in/03_gold_business_analytics"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureDatabricks_EmployeeLifecycle",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-08-15T08:26:36Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
